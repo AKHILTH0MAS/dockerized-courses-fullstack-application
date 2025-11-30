@@ -1,0 +1,23 @@
+# Dependency folders
+node_modules
+**/node_modules
+
+# Git and logs
+.git
+.gitignore
+logs
+*.log
+
+# Build artifacts
+dist
+build
+coverage
+
+# Docker stuff
+Dockerfile
+docker-compose.yml
+
+# IDE/OS junk
+.DS_Store
+.vscode
+*.swp

@@ -1,103 +1,88 @@
-# Full Stack Courses Application
+# 📦 Full Stack Courses — Containerized Deployment (PERN)
 
-This is a personal project to learn about frontend development with React and backend development with NodeJS and Express.
+This project is a Dockerized version of the original **Full Stack Courses** application, built using the **PERN stack (PostgreSQL, Express, React, Node.js)**.
 
-Full Stack application to manage courses using the **PERN stack**:
-
-- **P**ostgreSQL for the database
-- **E**xpress for the backend server
-- **R**eact for the frontend
-- **N**ode.js for runtime
+No core application logic was changed — the focus of this version is **improving developer experience, deployment, and portability** using Docker and Docker Compose.
 
 ---
 
-## 🧠 Overview
+## 🧱 Tech Stack
 
-### Server side: REST API with Node.js, Express & Sequelize (PostgreSQL)
-
-REST API to manage courses — it supports full CRUD:
-
-- **C**reate new courses
-- **R**ead existing courses (get all or by ID)
-- **U**pdate existing courses
-- **D**elete courses
-
-### Client side: React app created using Vite
-
-For now, the frontend client shows all courses and allows searching by ID.
-
-<img src="https://user-images.githubusercontent.com/6084473/200138408-25f6d8e3-6391-4252-b783-a237e54a8e01.png" alt="Courses list" width="600" >
+| Layer | Technology |
+|-------|------------|
+| Frontend | React (Vite) |
+| Backend | Node.js + Express |
+| ORM | Sequelize |
+| Database | PostgreSQL |
+| Containerization | Docker + Docker Compose |
 
 ---
 
-## ⚙️ Prerequisites
+## 🧩 What’s Included
 
-- [Node.js](https://nodejs.org/en/) (v18+ recommended)
-- [PostgreSQL](https://www.postgresql.org/download/)
-- [Git](https://git-scm.com/downloads)
+This release introduces full containerization:
+
+- `Dockerfile` for backend
+- `Dockerfile` for frontend
+- `docker-compose.yml` orchestrating:
+  - Backend API container
+  - Frontend container
+  - PostgreSQL database container
+
+With this setup, the **entire project can run with a single command**.
 
 ---
 
-## 🚀 Setup Instructions
+## 🚀 Getting Started
 
-### 1️⃣ Clone the repository
+### 1️⃣ Clone the Repository
 
-```bash
-git clone git@github.com:WarioNeila86/courses-fullstack-application.git
-cd courses-fullstack-application
+```sh
+git clone https://github.com/AKHILTH0MAS/dockerized-courses-fullstack-application.git
+cd dockerized-courses-fullstack-application
 ```
-
-### 2️⃣ Install dependencies
-
-```bash
-npm install
+### 2️⃣ Start the stack
+```sh
+docker compose up --build
 ```
+Once running, access the services at:
 
-### 3️⃣ Configure the database
-
-- Create PostgreSQL DB user
-  - Windows:
-    ```bash
-    psql -U postgres
-    CREATE USER "db-user" PASSWORD 'db-password' CREATEDB;
-    ```
-  - Linux:
-    ```bash
-    sudo -u postgres psql -c "CREATE USER \"db-user\" PASSWORD 'db-password' CREATEDB;"
-    ```
-
-### 4️⃣ Create the .env file
-
-- Create a `.env` file in the root directory and add the following variables:
-  ```
-  DB_DEVELOPMENT_USERNAME=db-user
-  DB_DEVELOPMENT_PASSWORD=db-password
-  ```
-
-### 5️⃣ Create and seed the database
-
-```bash
-npm run db-setup
+#### Service Url
+```sh
+Frontend	http://localhost:3000
+Backend API	http://localhost:4000
+Swagger Docs	http://localhost:4000/api/docs
 ```
-
-### 6️⃣ Start the application
-
-- Start the app: `npm run start`
-- Start the server: `npm run server-start` - server can be accessed on http://localhost:4000/
-- Start the server in development mode (it will automatically restart after changes are made): `npm run server-start-dev`
-- Start the client: `npm run client-run-dev` - client can be accessed on http://localhost:3000/
-- After starting the server, Swagger documentation can be accessed on http://localhost:4000/api/docs/
-
-### 7️⃣ Run tests
-
+#### 📂 Project Structure
 ```bash
-npm test
-```
+📦 fullstack-courses
+ ┣ 📁 client
+ ┃ ┗── Dockerfile
+ ┣ 📁 server
+ ┃ ┗── Dockerfile
+ ┣── docker-compose.yml
+ ┣── README.md
+ ┗── ...
+ ```
+#### 📝 Features
 
-## 📌 Sources
+* Create new courses
+* Read all courses or fetch one by ID
+* Update course details
+* Delete a course
+* Search & filter UI on frontend
+#### 🎯 Why Containerization?
 
-- 📺 YouTube course: [How to build a REST API with Node js & Express
-  ](https://www.youtube.com/watch?v=pKd0Rpw7O48)
-- 📝 [Restful API with NodeJS, Express, PostgreSQL, Sequelize, Travis, Mocha, Coveralls and Code Climate](https://medium.com/@victorsteven/restful-api-with-nodejs-express-postgresql-sequelize-travis-mocha-coveralls-and-code-climate-f28715f7a014)
-- 📝 [Documenting your Express API with Swagger](https://blog.logrocket.com/documenting-your-express-api-with-swagger/)
-- 📺 YouTube course: [CURSO de REACT JS desde 0](https://www.youtube.com/playlist?list=PL3aEngjGbYhkg3AR-cytsvQIIGp1JgrY_)
+##### Running the original project required multiple terminal windows, database installation, migrations, and environment setup. Docker fixes that by providing:
+* Consistent environment across systems
+* No local PostgreSQL setup required
+* Faster onboarding for contributors
+* Deployment-ready architecture
+* Works cleanly with CI/CD pipelines and Kubernetes
+
+#### 🔧 Future Enhancements
+* Multi-stage Docker builds for production
+* Persistent PostgreSQL storage via named volumes
+* GitHub Actions CI pipeline
+* Helm chart deployment for Kubernetes
+
