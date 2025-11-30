@@ -6,7 +6,7 @@ module.exports = {
     username: process.env.DB_DEVELOPMENT_USERNAME,
     password: process.env.DB_DEVELOPMENT_PASSWORD,
     database: 'courses-api-db',
-    host: '127.0.0.1',
+    host: 'postgres-db',
     dialect: 'postgres',
     logging: (msg) => logger.info(msg)
   },

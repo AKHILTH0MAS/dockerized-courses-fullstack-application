@@ -1,0 +1,63 @@
+version: "3.9"
+
+services: 
+  postgres-db: 
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: courses-api-db
+    ports:
+      - "5432:5432"
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - course-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend: 
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    container_name: course_server
+    restart: always
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: courses-api-db
+    ports:
+      - "4000:4000"
+    networks:
+      - course-net
+    # volumes:
+    #   - ./server:/app   # removed (unless you want hot-reload hell)
+
+  frontend: 
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    container_name: course_client
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - course-net
+    environment:
+      REACT_APP_API_URL: http://localhost:4000 # still won't work unless your build uses it
+
+volumes:
+  pgdata:
+
+networks:
+  course-net:
+    driver: bridge
